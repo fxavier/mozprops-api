@@ -1,8 +1,10 @@
 package com.xavier.mozprops_api.service;
 
 
+import java.io.IOException;
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
 
 import com.xavier.mozprops_api.dto.PropertyRequest;
 import com.xavier.mozprops_api.dto.PropertyResponse;
@@ -17,7 +19,7 @@ public interface PropertyService {
 
     PropertyResponse getPropertyById(Long id);
 
-    PropertyRequest create(@Valid PropertyRequest propertyRequest);
+    PropertyRequest create(@Valid PropertyRequest propertyRequest, MultipartFile[] images) throws IOException;
 
     PropertyRequest update(Long id, @Valid PropertyRequest propertyRequest);
 

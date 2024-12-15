@@ -1,10 +1,12 @@
 package com.xavier.mozprops_api.service.impl;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.xavier.mozprops_api.dto.CityResponse;
 import com.xavier.mozprops_api.dto.CountryDTO;
@@ -16,12 +18,14 @@ import com.xavier.mozprops_api.models.Address;
 import com.xavier.mozprops_api.models.City;
 import com.xavier.mozprops_api.models.Property;
 import com.xavier.mozprops_api.models.PropertyDetails;
+import com.xavier.mozprops_api.models.PropertyImages;
 import com.xavier.mozprops_api.models.PropertyType;
 import com.xavier.mozprops_api.models.User;
 import com.xavier.mozprops_api.models.enums.PropertyStatus;
 import com.xavier.mozprops_api.repository.PropertyRepository;
 import com.xavier.mozprops_api.repository.filter.PropertyFilter;
 import com.xavier.mozprops_api.service.PropertyService;
+import com.xavier.mozprops_api.storage.ImageStorage;
 
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
@@ -32,6 +36,9 @@ import lombok.RequiredArgsConstructor;
 public class PropertyServiceImpl implements PropertyService {
 
     private final PropertyRepository propertyRepository;
+
+    private final ImageStorage imageStorage;
+
 
     @Override
     public List<Property> getProperties(PropertyFilter propertyFilter) {
@@ -47,9 +54,21 @@ public class PropertyServiceImpl implements PropertyService {
 
     @Override
     @Transactional
-    public PropertyRequest create(@Valid PropertyRequest propertyRequest) {
+    public PropertyRequest create(@Valid PropertyRequest propertyRequest, MultipartFile[] images) throws IOException {
         Property property = toEntity(propertyRequest);
         propertyRepository.save(property);
+
+        if (images != null && images.length > 0) {
+            for (MultipartFile image : images) {
+                String imageUrl = imageStorage.upload(image);
+                property.getImages().add(PropertyImages.builder()
+                    .imageUrl(imageUrl)
+                    .property(property)
+                    .build());
+            }
+
+            propertyRepository.save(property);
+        }
         return toRequest(property);
     }
 

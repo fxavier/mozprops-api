@@ -1,17 +1,21 @@
 package com.xavier.mozprops_api.resources;
 
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.xavier.mozprops_api.dto.PropertyRequest;
 import com.xavier.mozprops_api.models.City;
@@ -26,7 +30,7 @@ import com.xavier.mozprops_api.repository.PropertyTypeRepository;
 import com.xavier.mozprops_api.repository.ProvinceRepository;
 import com.xavier.mozprops_api.repository.filter.PropertyFilter;
 import com.xavier.mozprops_api.service.PropertyService;
-
+import com.xavier.mozprops_api.storage.ImageStorage;
 
 import lombok.RequiredArgsConstructor;
 
@@ -40,6 +44,7 @@ public class PropertyResource {
     private final CityRepository cityRepository;
     private final ProvinceRepository provinceRepository;
     private final CountryRepository countryRepository;
+
 
     /*  @GetMapping
     public ResponseEntity<List<Property>> search(PropertyFilter propertyFilter) {
@@ -93,9 +98,11 @@ public class PropertyResource {
     }
     
 
-    @PostMapping
-    public ResponseEntity<PropertyRequest> createProperty(@RequestBody PropertyRequest propertyRequest) {
-        PropertyRequest createdProperty = propertyService.create(propertyRequest);
+    @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ResponseEntity<PropertyRequest> createProperty(
+        @RequestPart("property") PropertyRequest propertyRequest,
+        @RequestPart("images") MultipartFile[] images) throws IOException {
+        PropertyRequest createdProperty = propertyService.create(propertyRequest, images);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdProperty);
     }
 

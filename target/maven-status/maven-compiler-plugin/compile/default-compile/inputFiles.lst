@@ -1,4 +1,5 @@
 /Users/macpro2017/dev/code/API/spring/mozprops-api/src/main/java/com/xavier/mozprops_api/MozpropsApiApplication.java
+/Users/macpro2017/dev/code/API/spring/mozprops-api/src/main/java/com/xavier/mozprops_api/config/WebConfig.java
 /Users/macpro2017/dev/code/API/spring/mozprops-api/src/main/java/com/xavier/mozprops_api/dto/CityRequest.java
 /Users/macpro2017/dev/code/API/spring/mozprops-api/src/main/java/com/xavier/mozprops_api/dto/CityResponse.java
 /Users/macpro2017/dev/code/API/spring/mozprops-api/src/main/java/com/xavier/mozprops_api/dto/CountryDTO.java
@@ -57,3 +58,6 @@
 /Users/macpro2017/dev/code/API/spring/mozprops-api/src/main/java/com/xavier/mozprops_api/service/impl/PropertyTypeImpl.java
 /Users/macpro2017/dev/code/API/spring/mozprops-api/src/main/java/com/xavier/mozprops_api/service/impl/ProvinceServiceImpl.java
 /Users/macpro2017/dev/code/API/spring/mozprops-api/src/main/java/com/xavier/mozprops_api/service/impl/UserServiceImpl.java
+/Users/macpro2017/dev/code/API/spring/mozprops-api/src/main/java/com/xavier/mozprops_api/storage/ImageStorage.java
+/Users/macpro2017/dev/code/API/spring/mozprops-api/src/main/java/com/xavier/mozprops_api/storage/local/LocalImageStorageService.java
+/Users/macpro2017/dev/code/API/spring/mozprops-api/src/main/java/com/xavier/mozprops_api/storage/s3/S3ImageStorageService.java

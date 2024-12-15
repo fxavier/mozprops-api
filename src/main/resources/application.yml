@@ -25,4 +25,16 @@ spring:
     # password: mozprops
     # url: jdbc:postgresql://localhost:5432/mozprops
 
+local:
+  storage:
+    location: /Users/macpro2017/mozprops/storage
+
+aws:
+  s3:
+    bucket:
+      name: mozprops-images
+    region: us-east-1
+    access-key: AKIAIOSFODNN7EXAMPLE
+    secret-key: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+
 
