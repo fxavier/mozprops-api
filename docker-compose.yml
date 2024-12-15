@@ -1,0 +1,17 @@
+version: '3.9'
+services:
+  postgresdb:
+    image: postgres:15-alpine
+    container_name: mozpropsdb
+    restart: always
+    environment:
+      POSTGRES_USER: mozprops
+      POSTGRES_PASSWORD: mozprops
+      POSTGRES_DB: mozprops
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./docker-volumes/postgres:/var/lib/postgresql/data
+
+volumes:
+  postgres:

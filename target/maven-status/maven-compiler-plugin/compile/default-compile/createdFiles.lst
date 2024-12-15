@@ -1,0 +1,14 @@
+com/xavier/mozprops_api/models/User.class
+com/xavier/mozprops_api/dto/UserRequest$UserRequestBuilder.class
+com/xavier/mozprops_api/repository/UserRepository.class
+com/xavier/mozprops_api/models/enums/Role.class
+com/xavier/mozprops_api/dto/UserResponse$UserResponseBuilder.class
+com/xavier/mozprops_api/dto/UserResponse.class
+com/xavier/mozprops_api/service/impl/UserServiceImpl.class
+com/xavier/mozprops_api/models/User$UserBuilder.class
+com/xavier/mozprops_api/service/exception/EmailAlreadyTakenException.class
+com/xavier/mozprops_api/service/UserService.class
+com/xavier/mozprops_api/service/exception/UserNotFoundException.class
+com/xavier/mozprops_api/MozpropsApiApplication.class
+com/xavier/mozprops_api/dto/UserRequest.class
+com/xavier/mozprops_api/resources/UserResource.class
