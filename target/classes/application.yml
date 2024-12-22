@@ -1,7 +1,9 @@
 spring:
   application:
     name: mozprops-api
-  
+  profiles:
+    active: dev
+    
   datasource:
     url: jdbc:postgresql://localhost:5432/mozprops
     username: mozprops

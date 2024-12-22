@@ -3,6 +3,7 @@ package com.xavier.mozprops_api.service.impl;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +21,7 @@ import com.xavier.mozprops_api.models.Property;
 import com.xavier.mozprops_api.models.PropertyDetails;
 import com.xavier.mozprops_api.models.PropertyImages;
 import com.xavier.mozprops_api.models.PropertyType;
+import com.xavier.mozprops_api.models.Province;
 import com.xavier.mozprops_api.models.User;
 import com.xavier.mozprops_api.models.enums.PropertyStatus;
 import com.xavier.mozprops_api.repository.PropertyRepository;
@@ -54,33 +56,55 @@ public class PropertyServiceImpl implements PropertyService {
 
     @Override
     @Transactional
-    public PropertyRequest create(@Valid PropertyRequest propertyRequest, MultipartFile[] images) throws IOException {
-        Property property = toEntity(propertyRequest);
-        propertyRepository.save(property);
-
-        if (images != null && images.length > 0) {
-            for (MultipartFile image : images) {
-                String imageUrl = imageStorage.upload(image);
-                property.getImages().add(PropertyImages.builder()
-                    .imageUrl(imageUrl)
-                    .property(property)
-                    .build());
-            }
-
-            propertyRepository.save(property);
-        }
-        return toRequest(property);
+    public PropertyResponse create(@Valid PropertyRequest propertyRequest) {
+       Property property = toEntity(propertyRequest);
+       propertyRepository.save(property);
+       return toResponse(property);
     }
 
     @Override
     @Transactional
-    public PropertyRequest update(Long id, @Valid PropertyRequest propertyRequest) {
+    public PropertyResponse update(Long id, @Valid PropertyRequest propertyRequest) {
         Property property = propertyRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Property not found"));
-        property = toEntity(propertyRequest);
+                property = toEntity(propertyRequest);
+                propertyRepository.save(property);
+                return toResponse(property);
+            }
+            
+    @Override
+    public PropertyImages uploadImage(Long propertyId, MultipartFile file) throws IOException {
+        Property property = propertyRepository.findById(propertyId)
+                .orElseThrow(() -> new EntityNotFoundException("Property not found"));
+
+        String fileName = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
+        String imageUrl = imageStorage.upload(file, fileName);
+
+        PropertyImages propertyImages = PropertyImages.builder()
+                .contentType(file.getContentType())
+                .imageUrl(imageUrl)
+                .property(property)
+                .build();
+
+        property.addImage(propertyImages);
         propertyRepository.save(property);
-        return toRequest(property);
+        return propertyImages;
     }
+    
+    @Override
+    @Transactional
+    public void deleteImage(Long propertyId, Long imageId) {
+        Property property = propertyRepository.findById(propertyId)
+                .orElseThrow(() -> new EntityNotFoundException("Property not found"));
+        PropertyImages propertyImages = property.getImages().stream()
+                .filter(image -> image.getId().equals(imageId))
+                .findFirst()
+                .orElseThrow(() -> new EntityNotFoundException("Image not found"));
+
+        property.removeImage(propertyImages);
+        propertyRepository.save(property);
+    }
+
 
     @Override
     @Transactional
@@ -91,7 +115,8 @@ public class PropertyServiceImpl implements PropertyService {
     }
 
     public PropertyResponse toResponse(Property property) {
-       return PropertyResponse.builder()
+        Province province = property.getAddress().getCity().getProvince();
+        return PropertyResponse.builder()
             .id(property.getId())
             .title(property.getTitle())
             .description(property.getDescription())
@@ -107,15 +132,15 @@ public class PropertyServiceImpl implements PropertyService {
             .city(CityResponse.builder()
                 .id(property.getAddress().getCity().getId())
                 .cityName(property.getAddress().getCity().getCityName())
-                .province(ProvinceResponse.builder()
-                    .id(property.getAddress().getCity().getProvince().getId())
-                    .provinceName(property.getAddress().getCity().getProvince().getProvinceName())
+                .province(province != null ? ProvinceResponse.builder()
+                    .id(province.getId())
+                    .provinceName(province.getProvinceName())
                     .country(CountryDTO.builder()
-                        .id(property.getAddress().getCity().getProvince().getCountry().getId())
-                        .countryCode(property.getAddress().getCity().getProvince().getCountry().getCountryCode())
-                        .countryName(property.getAddress().getCity().getProvince().getCountry().getCountryName())
+                        .id(province.getCountry().getId())
+                        .countryCode(province.getCountry().getCountryCode())
+                        .countryName(province.getCountry().getCountryName())
                         .build())
-                    .build())
+                    .build() : null)
                 .build())
             .yearBuilt(property.getDetails().getYearBuilt())
             .numberOfRooms(property.getDetails().getNumberOfRooms())
@@ -133,7 +158,7 @@ public class PropertyServiceImpl implements PropertyService {
             .createdAt(property.getCreatedAt())
             .updatedAt(property.getUpdatedAt())
             .build();
-   }
+    }
 
     private Property toEntity(PropertyRequest propertyRequest) {
     return Property.builder()
@@ -200,6 +225,7 @@ public class PropertyServiceImpl implements PropertyService {
             .ownerId(property.getOwner().getId())
             .build();
    }
+
 
 
 }

@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.xavier.mozprops_api.dto.PropertyRequest;
 import com.xavier.mozprops_api.dto.PropertyResponse;
 import com.xavier.mozprops_api.models.Property;
+import com.xavier.mozprops_api.models.PropertyImages;
 import com.xavier.mozprops_api.repository.filter.PropertyFilter;
 
 import jakarta.validation.Valid;
@@ -19,11 +20,15 @@ public interface PropertyService {
 
     PropertyResponse getPropertyById(Long id);
 
-    PropertyRequest create(@Valid PropertyRequest propertyRequest, MultipartFile[] images) throws IOException;
+    PropertyResponse create(@Valid PropertyRequest propertyRequest);
 
-    PropertyRequest update(Long id, @Valid PropertyRequest propertyRequest);
+    PropertyResponse update(Long id, @Valid PropertyRequest propertyRequest);
 
     void delete(Long id);
+
+    PropertyImages uploadImage(Long propertyId, MultipartFile file) throws IOException;
+
+    void deleteImage(Long propertyId, Long imageId);
 
     PropertyResponse toResponse(Property property);
 

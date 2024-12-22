@@ -83,6 +83,7 @@ CREATE TABLE properties (
 CREATE TABLE property_images (
     id BIGSERIAL PRIMARY KEY,
     image_url VARCHAR(255),
+    content_type VARCHAR(255),
     property_id BIGINT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

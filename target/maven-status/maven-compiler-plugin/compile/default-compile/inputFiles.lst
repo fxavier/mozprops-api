@@ -10,6 +10,7 @@
 /Users/macpro2017/dev/code/API/spring/mozprops-api/src/main/java/com/xavier/mozprops_api/dto/ProvinceResponse.java
 /Users/macpro2017/dev/code/API/spring/mozprops-api/src/main/java/com/xavier/mozprops_api/dto/UserRequest.java
 /Users/macpro2017/dev/code/API/spring/mozprops-api/src/main/java/com/xavier/mozprops_api/dto/UserResponse.java
+/Users/macpro2017/dev/code/API/spring/mozprops-api/src/main/java/com/xavier/mozprops_api/infrastructure/config/AmazonS3Config.java
 /Users/macpro2017/dev/code/API/spring/mozprops-api/src/main/java/com/xavier/mozprops_api/models/Address.java
 /Users/macpro2017/dev/code/API/spring/mozprops-api/src/main/java/com/xavier/mozprops_api/models/City.java
 /Users/macpro2017/dev/code/API/spring/mozprops-api/src/main/java/com/xavier/mozprops_api/models/Country.java
@@ -29,6 +30,7 @@
 /Users/macpro2017/dev/code/API/spring/mozprops-api/src/main/java/com/xavier/mozprops_api/models/enums/SubscriptionStatus.java
 /Users/macpro2017/dev/code/API/spring/mozprops-api/src/main/java/com/xavier/mozprops_api/repository/CityRepository.java
 /Users/macpro2017/dev/code/API/spring/mozprops-api/src/main/java/com/xavier/mozprops_api/repository/CountryRepository.java
+/Users/macpro2017/dev/code/API/spring/mozprops-api/src/main/java/com/xavier/mozprops_api/repository/ImageRepository.java
 /Users/macpro2017/dev/code/API/spring/mozprops-api/src/main/java/com/xavier/mozprops_api/repository/Property/PropertyRepositoryImpl.java
 /Users/macpro2017/dev/code/API/spring/mozprops-api/src/main/java/com/xavier/mozprops_api/repository/Property/PropertyRepositoryQuery.java
 /Users/macpro2017/dev/code/API/spring/mozprops-api/src/main/java/com/xavier/mozprops_api/repository/PropertyRepository.java
@@ -38,6 +40,7 @@
 /Users/macpro2017/dev/code/API/spring/mozprops-api/src/main/java/com/xavier/mozprops_api/repository/filter/PropertyFilter.java
 /Users/macpro2017/dev/code/API/spring/mozprops-api/src/main/java/com/xavier/mozprops_api/resources/CityResource.java
 /Users/macpro2017/dev/code/API/spring/mozprops-api/src/main/java/com/xavier/mozprops_api/resources/CountryResource.java
+/Users/macpro2017/dev/code/API/spring/mozprops-api/src/main/java/com/xavier/mozprops_api/resources/ImageResource.java
 /Users/macpro2017/dev/code/API/spring/mozprops-api/src/main/java/com/xavier/mozprops_api/resources/PropertyResource.java
 /Users/macpro2017/dev/code/API/spring/mozprops-api/src/main/java/com/xavier/mozprops_api/resources/PropertyTypeResource.java
 /Users/macpro2017/dev/code/API/spring/mozprops-api/src/main/java/com/xavier/mozprops_api/resources/ProvinceResource.java

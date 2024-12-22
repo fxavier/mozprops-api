@@ -1,0 +1,10 @@
+# src/main/resources/application-prod.yml
+spring:
+  profile: prod
+  
+aws:
+  s3:
+    bucket-name: mozprops-api
+    access-key: YOUR_ACCESS_KEY
+    secret-key: YOUR_SECRET_KEY
+    region: us-east-1

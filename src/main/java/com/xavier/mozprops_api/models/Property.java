@@ -76,6 +76,25 @@ public class Property {
     private LocalDateTime updatedAt;
 
 
+    /*
+     * Add an image to the property.
+     * @param image The image to add.
+     */
+    public void addImage(PropertyImages image) {
+        images.add(image);
+        image.setProperty(this);
+    }
+
+    /*
+     * Remove an image from the property.
+     * @param image The image to remove.
+     */
+    public void removeImage(PropertyImages image) {
+        images.remove(image);
+        image.setProperty(null);
+    }
+
+
     @PrePersist
     public void prePersist() {
         createdAt = LocalDateTime.now();
